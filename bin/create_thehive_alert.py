@@ -31,11 +31,11 @@ def create_alert(csv_rows, config):
 
 	# Get the payload for the alert from the config, use defaults if they are not specified
 	payload = json.dumps(dict(
-		title = config.get('title'),
+		title = config.get('title', "No title"),
 		description = config.get('description', "No description provided."),
 		tags = [] if config.get('tags') is None else config.get('tags').split(","),
 		severity = int(config.get('severity', 2)),
-		tlp = int(config.get('tlp', -1)),
+		tlp = int(config.get('tlp', 2)),
 		type = config.get('type', "alert"),
 		artifacts = artifacts,
 		source = config.get('source', "Splunk"),
