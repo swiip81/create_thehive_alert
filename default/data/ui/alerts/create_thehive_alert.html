@@ -1,29 +1,5 @@
 <form class="form-horizontal form-complex">
     <div class="control-group">
-        <label class="control-label" for="create_thehive_alert_caseTemplate">Case Template</label>
-        <div class="controls">
-            <input type="text" name="action.create_thehive_alert.param.caseTemplate" id="create_thehive_alert_caseTemplate" />
-            <span class="help-block">The case template to use for imported alerts.</span>
-        </div>
-    </div>
-    <br clear="both" />
-    <div class="control-group">
-        <label class="control-label" for="create_thehive_alert_type">Type</label>
-        <div class="controls">
-            <input type="text" name="action.create_thehive_alert.param.type" id="create_thehive_alert_type" />
-            <span class="help-block">The alert type. Defaults to "alert".</span>
-        </div>
-    </div>
-    <br clear="both" />
-    <div class="control-group">
-        <label class="control-label" for="create_thehive_alert_source">Source</label>
-        <div class="controls">
-            <input type="text" name="action.create_thehive_alert.param.source" id="create_thehive_alert_source" />
-            <span class="help-block">The alert source. Defaults to "splunk".</span>
-        </div>
-    </div>
-    <br clear="both" />
-    <div class="control-group">
         <label class="control-label" for="create_thehive_alert_title">Title</label>
         <div class="controls">
 		<input type="text" name="action.create_thehive_alert.param.title" id="create_thehive_alert_title" />
@@ -43,7 +19,7 @@
         <label class="control-label" for="create_thehive_alert_tags">Tags</label>
         <div class="controls">
             <input type="text" name="action.create_thehive_alert.param.tags" id="create_thehive_alert_tags" />
-            <span class="help-block">Use single comma-separated string without quotes for multiple tags (ex. "badIP,spam").</span>
+	    <span class="help-block">For multiple tags use comma (ex. <code>badIP,spam</code>)</span>
         </div>
     </div>
     <br clear="both" />
@@ -71,4 +47,30 @@
             <span class="help-block">Change the TLP of the created alert.</span>
         </div>
     </div>
+    <br clear="both" />
+    <div style="clear: both; color: #888; margin: 25px 0 10px 0;">Advanced settings:</div>
+    <div class="control-group">
+        <label class="control-label" for="create_thehive_alert_caseTemplate">Case Template</label>
+        <div class="controls">
+            <input type="text" name="action.create_thehive_alert.param.caseTemplate" id="create_thehive_alert_caseTemplate" placeholder="Optional" />
+            <span class="help-block">The case template to use for imported alerts.</span>
+        </div>
+    </div>
+    <br clear="both" />
+    <div class="control-group">
+        <label class="control-label" for="create_thehive_alert_type">Type</label>
+        <div class="controls">
+            <input type="text" name="action.create_thehive_alert.param.type" id="create_thehive_alert_type" placeholder="Optional" />
+	    <span class="help-block">Defaults:<code>alert</code></span>
+        </div>
+    </div>
+    <br clear="both" />
+    <div class="control-group">
+        <label class="control-label" for="create_thehive_alert_source">Source</label>
+        <div class="controls">
+            <input type="text" name="action.create_thehive_alert.param.source" id="create_thehive_alert_source" placeholder="Optional" />
+	    <span class="help-block">Defaults:<code>splunk</code></span>
+        </div>
+    </div>
+    <br clear="both" />
 </form>
