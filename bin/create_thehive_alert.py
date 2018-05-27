@@ -7,7 +7,9 @@ import gzip
 import csv
 import requests
 import uuid
+import re
 from requests.auth import HTTPBasicAuth
+from fnmatch import fnmatch
 
 def create_alert(csv_rows, config):
 	print >> sys.stderr, "DEBUG Creating alert with config %s" % config
@@ -20,14 +22,20 @@ def create_alert(csv_rows, config):
 
 	# Filter empty multivalue fields
 	parsed_rows = {key: value for key, value in csv_rows.iteritems() if not key.startswith("__mv_")}
+	# Get list of fields to extract
+	field_list = re.split(r'\s*,\s*', config.get('fields', '*').strip())
 
 	artifacts = []
-	for key, value in parsed_rows.iteritems():
-		artifacts.append(dict(
-			dataType = key,
-			data = value,
-			message = "%s observed in this alert" % key
-		))
+	seen_fields = set()
+	for f in field_list:
+		for key, value in parsed_rows.iteritems():
+			if key not in seen_fields and fnmatch(key, f):
+				seen_fields.add(key)
+				artifacts.append(dict(
+					dataType = key,
+					data = value,
+                        		message = "observed: %s" % key
+				))
 
 	# Get the payload for the alert from the config, use defaults if they are not specified
 	payload = json.dumps(dict(

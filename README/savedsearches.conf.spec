@@ -38,3 +38,9 @@ action.create_thehive_alert.param.tlp = [ 0 | 1 | 2 | 3 ]
 * TLP affects releasability of information. Some analyzers will not be available on higher TLP settings.
 * Defaults to "2" (Amber)
 * (optional)
+
+action.create_thehive_alert.param.fields = <csv-list>
+* List of fields to send to the hive.
+* It is possible to use wildcards, such as "src_*"
+* Defaults to "*" (All)
+* (optional)

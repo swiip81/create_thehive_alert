@@ -47,8 +47,15 @@
             <span class="help-block">Change the TLP of the created alert.</span>
         </div>
     </div>
+    <div style="clear: both; color: #888; margin: 25px 0 10px 0; text-decoration: underline;">Advanced settings:</div>
+    <div class="control-group">
+        <label class="control-label" for="create_thehive_alert_fields">Fields</label>
+        <div class="controls">
+            <input type="text" name="action.create_thehive_alert.param.fields" id="create_thehive_alert_fields" placeholder="Optional but recommended" />
+            <span class="help-block">To select only some fields for thehive. (ex. <code>host,src_*</code>)</span>            
+        </div>
+    </div>
     <br clear="both" />
-    <div style="clear: both; color: #888; margin: 25px 0 10px 0;">Advanced settings:</div>
     <div class="control-group">
         <label class="control-label" for="create_thehive_alert_caseTemplate">Case Template</label>
         <div class="controls">
