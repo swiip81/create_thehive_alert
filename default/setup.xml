@@ -4,7 +4,7 @@
     </block>
     <block title="Server" endpoint="admin/alert_actions" entity="create_thehive_alert">
         <input field="param.url">
-            <label>Server Base URL (ex. http://server.com:9000)</label>
+            <label>Thehive Base URL, should start with HTTPS (ex. https://server.com:9000)</label>
             <type>text</type>
         </input>
         <input field="param.username">

@@ -15,6 +15,11 @@ def create_alert(csv_rows, config):
 	print >> sys.stderr, "DEBUG Creating alert with config %s" % config
 
 	url = config.get('url') # Get TheHive URL from Splunk configuration
+	if not url.startswith('https:'):
+		print >> sys.stderr, "DEBUG the URL for thehive should use HTTPS."
+		# Memo, have to test it first
+		# sys.exit(2)
+
 	username = config.get('username') # Get TheHive username from Splunk configuration
 	password = config.get('password') # Get TheHive password from Splunk configuration
 	auth = requests.auth.HTTPBasicAuth(username=username,password=password)
