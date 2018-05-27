@@ -14,6 +14,7 @@
 param.url = <string>
 param.username = <string>
 param.password = <string>
+param.apikey   = <string>
 
 param.fields = <csv-list>
 * List of fields for the hive.

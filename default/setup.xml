@@ -1,19 +1,35 @@
 <setup>
-  <block title="Custom Alerts">
+    <block title="TheHive Custom Alerts">
         <text>Configure TheHive Server Settings</text>
     </block>
+
     <block title="Server" endpoint="admin/alert_actions" entity="create_thehive_alert">
         <input field="param.url">
-            <label>Thehive Base URL, should start with HTTPS (ex. https://server.com:9000)</label>
+            <label>Thehive Base URL :</label>
             <type>text</type>
         </input>
+        <text>Should start with HTTPS (ex. https://yourserver.com:9000).</text>
+ 
+
         <input field="param.username">
-            <label>TheHive Username</label>
+            <label>TheHive Username :</label>
             <type>text</type>
         </input>
-        <input field="param.password">
-            <label>TheHive Password</label>
+	<text><![CDATA[
+		Username to use in thehive. Better if it is a <u>dedicated one</u>. Only <b>'alert'</b> role is needed, check it in thehive.
+	See <a href="https://github.com/TheHive-Project/TheHiveDocs/blob/master/admin/admin-guide.md">TheHive AdminGuide</a> for details.]]>
+         </text>
+
+	<input field="param.password">
+            <label>TheHive Password :</label>
             <type>text</type>
         </input>
+        <text>Password to be used with the Username.</text>
+
+	 <input field="param.apikey">
+            <label>TheHive API key :</label>
+            <type>text</type>
+        </input>
+	<text><![CDATA[<b>Not usable yet</b>, for now only user + password auth is supported here.]]></text>
     </block>
 </setup>

@@ -14,7 +14,7 @@ from fnmatch import fnmatch
 def create_alert(csv_rows, config):
 	print >> sys.stderr, "DEBUG Creating alert with config %s" % config
 
-	url = config.get('url') # Get TheHive URL from Splunk configuration
+	url = config.get('url', '') # Get TheHive URL from Splunk configuration
 	if not url.startswith('https:'):
 		print >> sys.stderr, "DEBUG the URL for thehive should use HTTPS."
 		# Memo, have to test it first
