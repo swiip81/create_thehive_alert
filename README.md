@@ -53,10 +53,11 @@ Don't forget to disable or delete the alert in splunk, with that cron it will ge
 ```
 It is preferable in splunk to produce a table with final "Observables" names to be sent to thehive
 With a raw event and more than 20 fields it is difficult to deal with the view of the alert in theHive. 
+Update: Note that now, you are allowed to define fields to send to the alert.
 ```
 ## Debug
 ```
 From menu :  Splunk > Settings > Alert actions > Create theHive Alert
-you can get the following search yes what is going on :
+you can get the following search to see what is going on :
 index=_internal sourcetype=splunkd component=sendmodalert action="create_thehive_alert"
 ```
