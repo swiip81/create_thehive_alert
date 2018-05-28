@@ -24,10 +24,12 @@ unzip master.zip
 rm -f master.zip
 mv create_thehive_alert-master create_thehive_alert
 /opt/splunk/bin/splunk restart
+Or
+https://yoursplunkserver:8000/en-US/debug/refresh
 ```
 ## Configuration
 ```
-From menu :  Splunk > Settings > Alert actions > Create theHive Alert
+From menu:  Splunk > Settings > Alert actions > Create theHive Alert
 Change Permissions from 'App' to 'All Apps' aka 'Global' and restrict usage with your users
 Then "Setup Create TheHive Alert" by filling the url, username, and password
 
@@ -51,13 +53,24 @@ Don't forget to disable or delete the alert in splunk, with that cron it will ge
 ```
 ## Recommendations
 ```
-It is preferable in splunk to produce a table with final "Observables" names to be sent to thehive
-With a raw event and more than 20 fields it is difficult to deal with the view of the alert in theHive. 
-Update: Note that now, you are allowed to define fields to send to the alert.
+Splunk is providing a list of fieldname=value, thehive is waiting for a list of values matching Type(s) [ default + customs ]
+I think this is an easy source of confusion. Also in thehive when you create a case from an alert only the definied Types are imported.
+
+So it is probably preferable in splunk to produce a table matching of "Observables" Type names to be sent to thehive.
+Check with :
+(your search ) | table url other user-agent regexp mail_subject registry mail autonomous-system domain ip uri_path filename hash file fqdn
+
+And use rename or eval to fill them :
+(your search) | rename sourceip as ip | eval url=URL
+
+Note: From a raw event and more than 20 fields it is difficult to deal with the view of the alert in theHive. 
+
+Update: Note that now, you are allowed to define the fields to send to the alert.
 ```
 ## Debug
 ```
-From menu :  Splunk > Settings > Alert actions > Create theHive Alert
+From menu:  Splunk > Settings > Alert actions > Create theHive Alert
 you can get the following search to see what is going on :
+
 index=_internal sourcetype=splunkd component=sendmodalert action="create_thehive_alert"
 ```
