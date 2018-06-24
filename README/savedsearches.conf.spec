@@ -44,3 +44,8 @@ action.create_thehive_alert.param.fields = <csv-list>
 * It is possible to use wildcards, such as "src_*"
 * Defaults to "*" (All)
 * (optional)
+
+action.create_thehive_alert.param.autotypes = [ 1 | 0 ]
+* Enable auto types reconization for this alert. 0 = Disable, 1 = Enable
+* Defaults to "0" (Disable)
+* (optional)

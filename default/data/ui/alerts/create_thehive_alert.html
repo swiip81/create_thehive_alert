@@ -49,6 +49,14 @@
     </div>
     <div style="clear: both; color: #888; margin: 25px 0 10px 0; text-decoration: underline;">Advanced settings:</div>
     <div class="control-group">
+        <label class="control-label" for="create_thehive_alert_autotypes">Auto Types</label>
+        <div class="controls">
+            <input type="checkbox" name="action.create_thehive_alert.param.autotypes" id="create_thehive_alert_autotypes" placeholder="Optional" value="1" />
+            <span class="help-block">Try to guess fields types. (ex. <code>ip,email,url,hash</code>)</span>            
+        </div>
+    </div>
+    <br clear="both" />
+    <div class="control-group">
         <label class="control-label" for="create_thehive_alert_fields">Fields</label>
         <div class="controls">
             <input type="text" name="action.create_thehive_alert.param.fields" id="create_thehive_alert_fields" placeholder="Optional but recommended" />
