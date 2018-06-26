@@ -138,7 +138,7 @@ def create_alert(csv_rows, config):
 			if key not in seen_fields and fnmatch(key, f):
 				seen_fields.add(key)
 				if value:
-					message = "Origial field name: %s\nAlert original severity: %s\nLink to alert: %s\nLink to result: %s\n" % (
+					message = "Original field name: %s  Alert original severity: %s  Link to alert: %s  Link to result: %s  " % (
 						key,
 						alert_severity,
 						view_link,
