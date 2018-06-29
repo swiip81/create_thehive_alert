@@ -19,3 +19,9 @@ param.apikey   = <string>
 param.fields = <csv-list>
 * List of fields for the hive.
 * It is possible to use wildcards, such as "src_*"
+
+# Internal parameters
+param.search = <string>
+param.view_link = <string>
+param.results_link = <string>
+param.alert_severity = <string>
