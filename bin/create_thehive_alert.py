@@ -30,7 +30,6 @@ def field_type_guessing(key, value):
 		"uri_path",
 		"filename",
 		"hash",
-		"file",
 		"fqdn"
 		]
 	if key in defaulttypes:
@@ -73,6 +72,7 @@ def field_type_guessing(key, value):
 		return "domain", value
 
 	cim_filename = [
+		"file",
 		"file_name",
 		"file_path"
 		]
