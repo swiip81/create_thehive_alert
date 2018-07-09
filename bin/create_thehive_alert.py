@@ -15,7 +15,7 @@ from fnmatch import fnmatch
 def field_type_guessing(key, value):
 	print >> sys.stderr, "DEBUG Entering Guessing function"
 
-	# Checking for splunk fields name already matching thehive default types
+	# Checking for splunk fields names already matching thehive default types
 	defaulttypes = [
 		"url",
 		"other",
@@ -35,6 +35,7 @@ def field_type_guessing(key, value):
 	if key in defaulttypes:
 		return key, value
 
+	# Checking for fields names matching thehive custom types given at setup
 	observables_list = re.split(r'\s*,\s*', config.get('observables').strip(' '))
 	if key in observables_list:
 		return key, value

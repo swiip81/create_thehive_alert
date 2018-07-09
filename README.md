@@ -33,6 +33,7 @@ In **TheHive**, you have to create a dedicated user and password
 In **splunk** from menu : `Splunk > Settings > Alert actions > Create TheHive Alert`  
 Change Permissions from `App` to `Global` and restrict the usage for your users  
 Then `Setup Create TheHive Alert` and fill **url, username, and password**  
+Provide a comma separated list of your `Custom observables` set in TheHive  
 Note that _apikey_ is not usable for now  
   
 ## How I _test_ it  
@@ -63,6 +64,13 @@ You can check this with :
 One solution to achieve that, is to use `rename` or `eval` splunk transformations to match those fields names :  
 `(your search) | rename sourceip as ip | eval url=URL`  
 
+Note that now, you are allowed at setup time to provide your list of custom obervables to match your config in TheHive  
+It is interresting to create many new types in TheHive, and allow them in splunk, such as :  
+`hostname,username,signature,command_line,filepath,md5,sha1,sha256,...`  
+
+Special observable type `file` is to attach binary in TheHive and for that it is recommanded to avoid using it with just a string  
+to avoid such problem, it is preferable to use `filename`  
+
 ## Useful optional settings
 
 You are allowed to define the **Fields** to send to the alert :  
@@ -73,6 +81,7 @@ You are able to check the **Auto Types** discovering option, in that case we wil
  - Some types like `ip`, `email` and `url` are easy detected by testing values with regexp  
  - Some fields names that are defined by the siem compatibility model are also moved to the right type  
 Default category is `other` if no match is done  
+ - Your additionnal types defined during the setup phase are used by this option  
 Original field name is added in the description fields that is available by going into the observable from the case.  
 
 ## Debug
