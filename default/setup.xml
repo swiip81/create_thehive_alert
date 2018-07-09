@@ -26,6 +26,12 @@
         </input>
         <text>Password to be used with the Username.</text>
 
+	 <input field="param.observables">
+            <label>Custom observables :</label>
+            <type>text</type>
+        </input>
+	<text>A comma separated list of the custom observables to be parsed.</text>
+
 	 <input field="param.apikey">
             <label>TheHive API key :</label>
             <type>text</type>

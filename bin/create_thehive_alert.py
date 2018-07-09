@@ -34,6 +34,10 @@ def field_type_guessing(key, value):
 		]
 	if key in defaulttypes:
 		return key, value
+
+	observables_list = re.split(r'\s*,\s*', config.get('observables').strip(' '))
+	if key in observables_list:
+		return key, value
 	
 	# Trying to match known splunk CIM fields names
 	cim_ip = [
