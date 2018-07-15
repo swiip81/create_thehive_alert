@@ -36,7 +36,7 @@ def field_type_guessing(key, value):
         return key, value
 
     # Checking for fields names matching thehive custom types given at setup
-    observables_list = re.split(r'\s*,\s*', config.get('observables').strip(' '))
+    observables_list = re.split(r'\s*,\s*', config.get('observables',"").strip(' '))
     if key in observables_list:
         return key, value
 
