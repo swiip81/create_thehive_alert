@@ -9,7 +9,6 @@
             <type>text</type>
         </input>
         <text>Should start with HTTPS (ex. https://yourserver.com:9000).</text>
- 
 
         <input field="param.username">
             <label>TheHive Username :</label>
@@ -19,23 +18,22 @@
 		Username to use in thehive. Better if it is a <u>dedicated one</u>. Only <b>'alert'</b> role is needed, check it in thehive.
 	See <a href="https://github.com/TheHive-Project/TheHiveDocs/blob/master/admin/admin-guide.md">TheHive AdminGuide</a> for details.]]>
          </text>
-
 	<input field="param.password">
             <label>TheHive Password :</label>
             <type>text</type>
         </input>
         <text>Password to be used with the Username.</text>
 
+	<input field="param.apikey">
+            <label>TheHive API key :</label>
+            <type>text</type>
+        </input>
+	<text><![CDATA[<b>OR</b> instead of username + password just provide an API key to use.]]></text>
+
 	 <input field="param.observables">
             <label>Custom observables :</label>
             <type>text</type>
         </input>
 	<text>A comma separated list of the custom observables to be parsed.</text>
-
-	 <input field="param.apikey">
-            <label>TheHive API key :</label>
-            <type>text</type>
-        </input>
-	<text><![CDATA[<b>Not usable yet</b>, for now only user + password auth is supported here.]]></text>
     </block>
 </setup>

@@ -129,7 +129,8 @@ def create_alert(csv_rows, config):
     username = config.get('username')
     # Get TheHive password from Splunk configuration
     password = config.get('password')
-    auth = requests.auth.HTTPBasicAuth(username=username, password=password)
+    # Get TheHive apikey from Splunk configuration
+    apikey = config.get('apikey')
     # Generate unique identifier for alert
     sourceRef = str(uuid.uuid4())[0:6]
     # Get the flag for auto type discovering function
@@ -182,9 +183,17 @@ def create_alert(csv_rows, config):
     try:
         print >> sys.stderr, 'INFO Calling url="%s" with payload=%s' % (url, payload)
         headers = {'Content-type': 'application/json'}
-        response = requests.post(url=url + "/api/alert",
-                                 headers=headers, data=payload,
-                                 auth=auth, verify=False)
+        if len(apikey) != 0 and apikey != "{apikey}":
+            headers['Authorization'] = 'Bearer ' + apikey
+            response = requests.post(url=url + "/api/alert", headers=headers,
+                                     data=payload, verify=False)
+            print >> sys.stderr, "INFO Using apikey for auth"
+        else:
+            auth = requests.auth.HTTPBasicAuth(username=username, password=password)
+            response = requests.post(url=url + "/api/alert",
+                                     headers=headers, data=payload,
+                                     auth=auth, verify=False)
+            print >> sys.stderr, "INFO Using username and password for auth"
         print >> sys.stderr, "INFO TheHive server responded with HTTP status %s" % response.status_code
         response.raise_for_status()
         print >> sys.stderr, "INFO theHive server response: %s" % response.json()

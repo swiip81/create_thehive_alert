@@ -28,11 +28,12 @@ mv create_thehive_alert-master create_thehive_alert
 
 In **TheHive**, you have to create a dedicated user and password  
  - Permission : **None**  (yes it is recommended)  
- - Additional Permissions : **Allow alerts creation**  
+ - Additional Permissions : **Allow alerts creation** 
+ - Create API Key is recommended 
 
 In **splunk** from menu : `Splunk > Settings > Alert actions > Create TheHive Alert`  
 Change Permissions from `App` to `Global` and restrict the usage for your users  
-Then `Setup Create TheHive Alert` and fill **url, username, and password**  
+Then `Setup Create TheHive Alert` fill **url** and either **username, password** or **APIKey**  
 Provide a comma separated list of your `Custom observables` set in TheHive  
 Note that _apikey_ is not usable for now  
   
