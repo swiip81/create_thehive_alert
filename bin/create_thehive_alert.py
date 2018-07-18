@@ -140,6 +140,7 @@ def create_alert(csv_rows, config):
     view_link = config.get('view_link')
     search = config.get('search')
     results_link = config.get('results_link')
+    description = config.get('description', "")
 
     # Filter empty multivalue fields
     parsed_rows = {key: value for key, value in csv_rows.iteritems() if not key.startswith("__mv_")}
@@ -153,23 +154,30 @@ def create_alert(csv_rows, config):
             if key not in seen_fields and fnmatch(key, f):
                 seen_fields.add(key)
                 if value:
-                    message = "Original field name: %s  Alert original severity: %s  Link to alert: %s  Link to result: %s  " % (
-                        key,
-                        alert_severity,
-                        view_link,
-                        results_link)
-                    if autotypeflag == '1':
-                        key, value = field_type_guessing(key, value)
-                    artifacts.append(dict(
-                        dataType=key,
-                        data=value,
-                        message=message
-                    ))
+                    if key == "description":
+                       description = description + "  \nScenario: " + value
+                    elif key == "timelog":
+                       description = description + "  \nTimelog: " + value
+                    else:
+                        message = "Original field name: %s  \nAlert original severity: %s  \nLink to alert: %s  \nLink to result: %s  " % (
+                            key,
+                            alert_severity,
+                            view_link,
+                            results_link)
+                        # Parsing TheHive custom observables 
+                        if autotypeflag == '1':
+                            key, value = field_type_guessing(key, value)
+                        # Building observables dictionary
+                        artifacts.append(dict(
+                            dataType=key,
+                            data=value,
+                            message=message
+                        ))
 
     # Get the payload for the alert from the config, use defaults if they are not specified
     payload = json.dumps(dict(
         title=config.get('title', "No title"),
-        description=config.get('description', "No description provided."),
+        description=description,
         tags=[] if config.get('tags') is None else config.get('tags').split(","),
         severity=int(config.get('severity', 2)),
         tlp=int(config.get('tlp', 2)),
