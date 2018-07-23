@@ -140,6 +140,7 @@ def create_alert(csv_rows, config):
     view_link = config.get('view_link')
     search = config.get('search')
     results_link = config.get('results_link')
+    title=config.get('title', "No title")
     description = config.get('description', "")
 
     # Filter empty multivalue fields
@@ -154,9 +155,11 @@ def create_alert(csv_rows, config):
             if key not in seen_fields and fnmatch(key, f):
                 seen_fields.add(key)
                 if value:
-                    if key == "description":
+                    if key == "thehive_title":
+                       title = title + ": " + value
+                    elif key == "thehive_description":
                        description = description + "  \nScenario: " + value
-                    elif key == "timelog":
+                    elif key == "thehive_timelog":
                        description = description + "  \nTimelog: " + value
                     else:
                         message = "Original field name: %s  \nAlert original severity: %s  \nLink to alert: %s  \nLink to result: %s  " % (
@@ -176,7 +179,7 @@ def create_alert(csv_rows, config):
 
     # Get the payload for the alert from the config, use defaults if they are not specified
     payload = json.dumps(dict(
-        title=config.get('title', "No title"),
+        title=title,
         description=description,
         tags=[] if config.get('tags') is None else config.get('tags').split(","),
         severity=int(config.get('severity', 2)),
