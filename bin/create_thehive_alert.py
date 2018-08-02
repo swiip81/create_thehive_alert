@@ -85,7 +85,10 @@ def field_type_guessing(key, value):
         return "filename", value
 
     cim_hash = [
-        "file_hash"
+        "file_hash",
+        "md5",
+        "sha1",
+        "sha256"
         ]
     if key in cim_hash:
         return "hash", value
