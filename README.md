@@ -10,10 +10,10 @@ For now, I am just trying to make it more friendly and usable for my usage.
 I am **not** a developer, a noob in TheHive, just a splunker.
 
 
-# My test environment 
+# Tested environment 
  ```
-splunk  7.1.0
-TheHive 3.0.5
+splunk  <= 7.1.2
+TheHive <= 3.0.9
  ```
 
 ## Installation
@@ -67,10 +67,12 @@ One solution to achieve that, is to use `rename` or `eval` splunk transformation
 
 Note that now, you are allowed at setup time to provide your list of custom obervables to match your config in TheHive  
 It is interresting to create many new types in TheHive, and allow them in splunk, such as :  
-`hostname,username,signature,command_line,filepath,md5,sha1,sha256,...`  
+`hostname,username,signature,command_line,filepath,...`  
 
 Special observable type `file` is to attach binary in TheHive and for that it is recommanded to avoid using it with just a string  
 to avoid such problem, it is preferable to use `filename`  
+
+Special obervable type `hash` as to be used for all kind or it impossible to submit them with cortex, so md5 and sha1/256 are sent as `hash`  
 
 ## Useful optional settings
 
