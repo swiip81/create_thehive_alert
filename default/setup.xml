@@ -35,5 +35,12 @@
             <type>text</type>
         </input>
 	<text>A comma separated list of the custom observables to be parsed.</text>
+
+  <input field="param.ignoredfields">
+           <label>Ignored Fields :</label>
+           <type>text</type>
+       </input>
+ <text>A comma separated list of splunk fields not to be sent to TheHive.</text>
+
     </block>
 </setup>

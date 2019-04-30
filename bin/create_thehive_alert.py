@@ -35,6 +35,11 @@ def field_type_guessing(key, value):
     if key in defaulttypes:
         return key, value
 
+    # Checking for fields that are not to be sent to TheHive
+    ignoredfields_list = re.split(r'\s*,\s*', config.get('ignoredfields',"").strip(' '))
+    if key in ignoredfields_list:
+        return ("", "")
+
     # Checking for fields names matching thehive custom types given at setup
     observables_list = re.split(r'\s*,\s*', config.get('observables',"").strip(' '))
     if key in observables_list:
@@ -170,14 +175,15 @@ def create_alert(csv_rows, config):
                             alert_severity,
                             view_link,
                             results_link)
-                        # Parsing TheHive custom observables 
+                        # Parsing TheHive custom observables
                         if autotypeflag == '1':
                             key, value = field_type_guessing(key, value)
-                        # Building observables dictionary
-                        artifacts.append(dict(
-                            dataType=key,
-                            data=value,
-                            message=message
+                        if key and value:
+                            # Building observables dictionary
+                            artifacts.append(dict(
+                                dataType=key,
+                                data=value,
+                                message=message
                         ))
 
     # Get the payload for the alert from the config, use defaults if they are not specified
