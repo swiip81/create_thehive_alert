@@ -16,6 +16,7 @@ param.username = <string>
 param.password = <string>
 param.observables = <string>
 param.apikey   = <string>
+param.ignoredfields = <string>
 
 # Internal parameters
 param.search = <string>
