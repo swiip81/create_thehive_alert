@@ -13,7 +13,7 @@ from fnmatch import fnmatch
 
 
 def field_type_guessing(key, value):
-    print >> sys.stderr, "DEBUG Entering Guessing function"
+    print("DEBUG Entering Guessing function", file=sys.stderr)
 
     # Checking for splunk fields names already matching thehive default types
     defaulttypes = [
@@ -124,12 +124,12 @@ def field_type_guessing(key, value):
 
 
 def create_alert(csv_rows, config):
-    print >> sys.stderr, "DEBUG Creating alert with config %s" % config
+    print("DEBUG Creating alert with config %s" % config, file=sys.stderr)
 
     # Get TheHive URL from Splunk configuration
     url = config.get('url', '')
     if not url.startswith('https:'):
-        print >> sys.stderr, "DEBUG the URL for thehive should use HTTPS."
+        print("DEBUG the URL for thehive should use HTTPS.", file=sys.stderr)
         # Memo, have to test it first
         # sys.exit(2)
 
@@ -152,14 +152,14 @@ def create_alert(csv_rows, config):
     description = config.get('description', "")
 
     # Filter empty multivalue fields
-    parsed_rows = {key: value for key, value in csv_rows.iteritems() if not key.startswith("__mv_")}
+    parsed_rows = {key: value for key, value in csv_rows.items() if not key.startswith("__mv_")}
     # Get list of fields to extract
     field_list = re.split(r'\s*,\s*', config.get('fields', '*').strip())
 
     artifacts = []
     seen_fields = set()
     for f in field_list:
-        for key, value in parsed_rows.iteritems():
+        for key, value in parsed_rows.items():
             if key not in seen_fields and fnmatch(key, f):
                 seen_fields.add(key)
                 if value:
@@ -201,26 +201,26 @@ def create_alert(csv_rows, config):
     ))
     # Send the request to create the alert
     try:
-        print >> sys.stderr, 'INFO Calling url="%s" with payload=%s' % (url, payload)
+        print('INFO Calling url="%s" with payload=%s' % (url, payload), file=sys.stderr)
         headers = {'Content-type': 'application/json'}
         if len(apikey) != 0 and apikey != "{apikey}":
             headers['Authorization'] = 'Bearer ' + apikey
             response = requests.post(url=url + "/api/alert", headers=headers,
                                      data=payload, verify=False)
-            print >> sys.stderr, "INFO Using apikey for auth"
+            print("INFO Using apikey for auth", file=sys.stderr)
         else:
             auth = requests.auth.HTTPBasicAuth(username=username, password=password)
             response = requests.post(url=url + "/api/alert",
                                      headers=headers, data=payload,
                                      auth=auth, verify=False)
-            print >> sys.stderr, "INFO Using username and password for auth"
-        print >> sys.stderr, "INFO TheHive server responded with HTTP status %s" % response.status_code
+            print("INFO Using username and password for auth", file=sys.stderr)
+        print("INFO TheHive server responded with HTTP status %s" % response.status_code, file=sys.stderr)
         response.raise_for_status()
-        print >> sys.stderr, "INFO theHive server response: %s" % response.json()
+        print("INFO theHive server response: %s" % response.json(), file=sys.stderr)
     except requests.exceptions.HTTPError as e:
-        print >> sys.stderr, "ERROR theHive server returned following error: %s" % e
+        print("ERROR theHive server returned following error: %s" % e, file=sys.stderr)
     except requests.exceptions.RequestException as e:
-        print >> sys.stderr, "ERROR Error creating alert: %s" % e
+        print("ERROR Error creating alert: %s" % e, file=sys.stderr)
 
 
 if __name__ == "__main__":
@@ -233,7 +233,7 @@ if __name__ == "__main__":
         results_file = payload.get('results_file')
         if os.path.exists(results_file):
             try:
-                with gzip.open(results_file) as file:
+                with gzip.open(results_file, "rt", encoding='utf-8') as file:
                     reader = csv.DictReader(file)
                     # iterate through each row, creating a alert for each and then adding the
                     # observables from that row to the alert that was created
@@ -241,11 +241,11 @@ if __name__ == "__main__":
                         create_alert(csv_rows, config)
                 sys.exit(0)
             except IOError as e:
-                print >> sys.stderr, "FATAL Results file exists but could not be opened/read"
+                print("FATAL Results file exists but could not be opened/read", file=sys.stderr)
                 sys.exit(3)
         else:
-            print >> sys.stderr, "FATAL Results file does not exist"
+            print("FATAL Results file does not exist", file=sys.stderr)
             sys.exit(2)
     else:
-        print >> sys.stderr, "FATAL Unsupported execution mode (expected --execute flag)"
+        print("FATAL Unsupported execution mode (expected --execute flag)", file=sys.stderr)
         sys.exit(1)
