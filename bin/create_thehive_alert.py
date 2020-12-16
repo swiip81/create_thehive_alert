@@ -152,7 +152,11 @@ def create_alert(csv_rows, config):
     description = config.get('description', "")
 
     # Filter empty multivalue fields
-    parsed_rows = {key: value for key, value in csv_rows.items() if not key.startswith("__mv_")}
+    parsed_rows = {key: value for key, value in csv_rows.items() if not (key.startswith("__mv_") and not(value))}
+    for k in [mvk.replace('__mv_','') for mvk in parsed_rows.keys() if (mvk.startswith("__mv_"))]:
+        parsed_rows[k] = parsed_rows['__mv_'+k][1:-1]
+        del parsed_rows['__mv_'+k]
+
     # Get list of fields to extract
     field_list = re.split(r'\s*,\s*', config.get('fields', '*').strip())
 
@@ -176,15 +180,12 @@ def create_alert(csv_rows, config):
                             view_link,
                             results_link)
                         # Parsing TheHive custom observables
-                        if autotypeflag == '1':
-                            key, value = field_type_guessing(key, value)
                         if key and value:
                             # Building observables dictionary
-                            artifacts.append(dict(
-                                dataType=key,
-                                data=value,
-                                message=message
-                        ))
+                            for sv in value.split(r'''$;$'''):
+                                if autotypeflag == '1':
+                                    key, sv = field_type_guessing(key, sv)
+                                artifacts.append(dict(dataType=key,data=sv, message=message))
 
     # Get the payload for the alert from the config, use defaults if they are not specified
     payload = json.dumps(dict(

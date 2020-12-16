@@ -12,8 +12,8 @@ I am **not** a developer, a noob in TheHive, just a splunker.
 
 # Tested environment 
  ```
-splunk  <= 7.1.2
-TheHive <= 3.0.9
+splunk  <= 8.0.7
+TheHive <= 3.3.1-1
  ```
 
 ## Installation
