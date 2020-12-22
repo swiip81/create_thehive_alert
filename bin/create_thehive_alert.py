@@ -160,6 +160,10 @@ def create_alert(csv_rows, config):
     # Get list of fields to extract
     field_list = re.split(r'\s*,\s*', config.get('fields', '*').strip())
 
+    # init severity and tags 
+    severity = int(config.get('severity', 2))
+    tags=[] if config.get('tags') is None else config.get('tags').split(",")
+
     artifacts = []
     seen_fields = set()
     for f in field_list:
@@ -173,6 +177,10 @@ def create_alert(csv_rows, config):
                        description = description + "  \nScenario: " + value
                     elif key == "thehive_timelog":
                        description = description + "  \nTimelog: " + value
+                    elif key == "thehive_severity":
+                        severity = int(value)
+                    elif key == "thehive_tags":
+                        tags.extend(value.split(','))
                     else:
                         message = "Original field name: %s  \nAlert original severity: %s  \nLink to alert: %s  \nLink to result: %s  " % (
                             key,
@@ -191,8 +199,8 @@ def create_alert(csv_rows, config):
     payload = json.dumps(dict(
         title=title,
         description=description,
-        tags=[] if config.get('tags') is None else config.get('tags').split(","),
-        severity=int(config.get('severity', 2)),
+        tags=tags,
+        severity=severity,
         tlp=int(config.get('tlp', 2)),
         type=config.get('type', "alert"),
         artifacts=artifacts,
