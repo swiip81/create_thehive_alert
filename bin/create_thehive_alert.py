@@ -38,7 +38,7 @@ def field_type_guessing(key, value):
     # Checking for fields that are not to be sent to TheHive
     ignoredfields_list = re.split(r'\s*,\s*', config.get('ignoredfields',"").strip(' '))
     if key in ignoredfields_list:
-        return ("", "")
+        return ("other", "N/A")
 
     # Checking for fields names matching thehive custom types given at setup
     observables_list = re.split(r'\s*,\s*', config.get('observables',"").strip(' '))
@@ -192,8 +192,11 @@ def create_alert(csv_rows, config):
                             # Building observables dictionary
                             for sv in value.split(r'''$;$'''):
                                 if autotypeflag == '1':
-                                    key, sv = field_type_guessing(key, sv)
-                                artifacts.append(dict(dataType=key,data=sv, message=message))
+                                    key_new, sv_new = field_type_guessing(key, sv)
+                                else:
+                                    key_new, sv_new = key, sv
+                                if (sv_new.lower() != "n/a"):
+                                    artifacts.append(dict(dataType=key_new,data=sv_new, message=message))
 
     # Get the payload for the alert from the config, use defaults if they are not specified
     payload = json.dumps(dict(
