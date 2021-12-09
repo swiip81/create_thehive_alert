@@ -113,7 +113,7 @@ def field_type_guessing(key, value):
 
     # Tring to guess type with regexp email
     if re.match("^[^@]+@[^@]+\.[^@]+$", value):
-        return "email", value
+        return "mail", value
 
     # Tring to guess type with regexp url
     if re.match("^https?://", value):
@@ -140,7 +140,7 @@ def create_alert(csv_rows, config):
     # Get TheHive apikey from Splunk configuration
     apikey = config.get('apikey')
     # Generate unique identifier for alert
-    sourceRef = str(uuid.uuid4())[0:6]
+    sourceRef = str(uuid.uuid4())[0:9]
     # Get the flag for auto type discovering function
     autotypeflag = config.get('autotypes')
     # get additional values of search for fields description
