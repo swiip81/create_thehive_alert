@@ -208,8 +208,8 @@ def create_alert(csv_rows, config):
         tags=tags,
         severity=severity,
         tlp=int(config.get('tlp', 2)),
-        type=config.get('type', "alert"),
-        artifacts=artifacts,
+        type=config.get('type', "alertType"),
+        observables=artifacts,
         source=config.get('source', "Splunk"),
         caseTemplate=config.get('caseTemplate', "default"),
         sourceRef=sourceRef
@@ -220,12 +220,12 @@ def create_alert(csv_rows, config):
         headers = {'Content-type': 'application/json'}
         if len(apikey) != 0 and apikey != "{apikey}":
             headers['Authorization'] = 'Bearer ' + apikey
-            response = requests.post(url=url + "/api/alert", headers=headers,
+            response = requests.post(url=url + "/api/v1/alert", headers=headers,
                                      data=payload, verify=False)
             print("INFO Using apikey for auth", file=sys.stderr)
         else:
             auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-            response = requests.post(url=url + "/api/alert",
+            response = requests.post(url=url + "/api/v1/alert",
                                      headers=headers, data=payload,
                                      auth=auth, verify=False)
             print("INFO Using username and password for auth", file=sys.stderr)
