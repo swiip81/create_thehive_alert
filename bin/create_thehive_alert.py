@@ -178,7 +178,10 @@ def create_alert(csv_rows, config):
                     elif key == "thehive_timelog":
                        description = description + "  \nTimelog: " + value
                     elif key == "thehive_severity":
-                        severity = int(value)
+                        if (value.isdigit() and (int(value) in [1,2,3,4])):
+                            severity = int(value)
+                        else:
+                            print("WARNING thehive_severity value %s is not in [1,2,3,4] , will be ignored !" % value, file=sys.stderr)
                     elif key == "thehive_tags":
                         tags.extend(value.split(','))
                     else:
