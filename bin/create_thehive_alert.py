@@ -23,7 +23,7 @@ def field_type_guessing(key, value):
         "regexp",
         "mail_subject",
         "registry",
-        "mail",
+        "email",
         "autonomous-system",
         "domain",
         "ip",
@@ -113,7 +113,7 @@ def field_type_guessing(key, value):
 
     # Tring to guess type with regexp email
     if re.match("^[^@]+@[^@]+\.[^@]+$", value):
-        return "mail", value
+        return "email", value
 
     # Tring to guess type with regexp url
     if re.match("^https?://", value):
