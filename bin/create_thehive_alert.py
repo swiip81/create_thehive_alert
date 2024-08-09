@@ -140,7 +140,7 @@ def create_alert(csv_rows, config):
     # Get TheHive apikey from Splunk configuration
     apikey = config.get('apikey')
     # Generate unique identifier for alert
-    sourceRef = str(uuid.uuid4())[0:9]
+    sourceRef = str(uuid.uuid4())[0:13]
     # Get the flag for auto type discovering function
     autotypeflag = config.get('autotypes')
     # get additional values of search for fields description
